@@ -12,14 +12,20 @@ export default function Feedback() {
   const [neutral, setNeutral] = useState(0);
   const [bad, setBad] = useState(0);
 
-  const handleGoodIncrement = () => {
-    setGood(prevState => prevState + 1);
-  }
-  const handleNeutralIncrement = () => {
-    setNeutral(prevState => prevState + 1);
-  }
-  const handleBadIncrement = () => {
-    setBad(prevState => prevState + 1);
+  const handleIncrement = (name) => {
+    switch (name) {
+      case 'good':
+        setGood(prevState => prevState + 1);
+        break;
+      case 'neutral':
+        setNeutral(prevState => prevState + 1);
+        break;
+      case 'bad':
+        setBad(prevState => prevState + 1);
+        break;
+      default:
+        return;
+    }
   }
   const  countTotalFeedback = () => {
     return (
@@ -32,13 +38,12 @@ export default function Feedback() {
     return Math.round((good / (good + neutral + bad)) * 100);
     
   }
+  
   return (
       <>
       <Section title="Please leave feedback">
-        <FeedbackOptions
-          handleGoodIncrement={handleGoodIncrement}
-          handleNeutralIncrement={handleNeutralIncrement}
-          handleBadIncrement={handleBadIncrement}
+        <FeedbackOptions options={{good,neutral,bad}}
+          handleIncrement={handleIncrement}
           />
         </Section>
         <Section title='Statistic'>

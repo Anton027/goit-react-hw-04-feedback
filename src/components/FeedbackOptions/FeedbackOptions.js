@@ -1,39 +1,26 @@
 import { Box } from "components/Box"
 import PropTypes from 'prop-types';
-export const FeedbackOptions = ({
-    handleGoodIncrement,
-    handleNeutralIncrement,
-    handleBadIncrement
+export const FeedbackOptions = ({ options: { good, neutral, bad },
+    handleIncrement
 }) => {
+    const optionsKeys = Object.keys({ good, neutral, bad })
+    
     return (
         <Box as={'ul'} display='flex' gridGap="10px">
-            <li >
+            {optionsKeys.map(option => (
+                <li key={option}>
                     <button
                         type="button"
-                        onClick={() => handleGoodIncrement()}>
-                        Good
-                    </button>
-            </li>
-            <li >
-                    <button
-                        type="button"
-                        onClick={() => handleNeutralIncrement()}>
-                        Netural
-                    </button>
-            </li>
-            <li>
-                    <button
-                        type="button"
-                        onClick={() => handleBadIncrement()}>
-                        Bad
+                        onClick={() => handleIncrement(option)}>
+                        {option.toLocaleUpperCase()}
                     </button>
                 </li>
+            ))}
         </Box>
     )
 }
 
 FeedbackOptions.propTypes = {
-    handleGoodIncrement: PropTypes.func.isRequired,
-    handleNeutralIncrement: PropTypes.func.isRequired,
-    handleBadIncrement: PropTypes.func.isRequired
+    options: PropTypes.object.isRequired,
+    handleIncrement: PropTypes.func.isRequired,
 };
